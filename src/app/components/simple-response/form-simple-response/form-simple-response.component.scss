@@ -1,0 +1,22 @@
+.align-fields {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+
+    .separator {
+        display: flex;
+        width: 100%;
+        background-color: #dadada;
+    }
+
+    .align-radio {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        input {
+            margin: 0;
+        }
+    }
+}

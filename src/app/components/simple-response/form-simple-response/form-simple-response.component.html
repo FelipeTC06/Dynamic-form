@@ -1,1 +1,21 @@
-<p>form-simple-response works!</p>
+<form [formGroup]="simpleResponseForm" (ngSubmit)="onSubmit()">
+    <div *ngFor="let field of fields" class="align-fields">
+        <label [ngClass]="{'separator': field.type === 'separator'}">{{field.label}}</label>
+
+        <input *ngIf="field.type === 'text'" [formControlName]="field.name" type="text">
+
+        <select *ngIf="field.type === 'select'" [formControlName]="field.name">
+            <option *ngFor="let option of field.options" [value]="option.value">{{option.label}}</option>
+        </select>
+
+        <div *ngIf="field.type === 'radio'" class="align-fields">
+            <div *ngFor="let option of field.options" class="align-radio">
+                <input [formControlName]="field.name" type="radio" [value]="option.value">{{option.label}}
+            </div>
+        </div>
+
+        <input *ngIf="field.type === 'checkbox'" [formControlName]="field.name" type="checkbox">
+    </div>
+
+    <button type="submit">Submit</button>
+</form>
