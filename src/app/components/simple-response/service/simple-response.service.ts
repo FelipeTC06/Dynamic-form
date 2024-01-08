@@ -25,4 +25,8 @@ export class SimpleResponseService {
     return this.http.get(`${this.url}/${id}`);
   }
 
+  public updateItem(data: SimpleResponse, id: number) {
+    return this.http.put(`${this.url}/${id}`, data);
+  }
+
 }

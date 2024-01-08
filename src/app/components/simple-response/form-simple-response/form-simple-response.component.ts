@@ -2,23 +2,23 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SimpleResponse } from '../models/simple-response';
 import { SimpleResponseService } from '../service/simple-response.service';
 import { LayoutComponent } from "../../layout/layout.component";
 
 @Component({
-    selector: 'app-form-simple-response',
-    standalone: true,
-    templateUrl: './form-simple-response.component.html',
-    styleUrl: './form-simple-response.component.scss',
-    imports: [CommonModule, ReactiveFormsModule, HttpClientModule, LayoutComponent]
+  selector: 'app-form-simple-response',
+  standalone: true,
+  templateUrl: './form-simple-response.component.html',
+  styleUrl: './form-simple-response.component.scss',
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, LayoutComponent]
 })
 export class FormSimpleResponseComponent {
 
   public simpleResponseForm!: FormGroup;
 
-  public  id!: number;
+  public id!: number;
 
   public fields: any[] = [
     {
@@ -88,13 +88,14 @@ export class FormSimpleResponseComponent {
   constructor(
     private formBuilder: FormBuilder,
     private simpleResponseService: SimpleResponseService,
-    private activeRoute: ActivatedRoute
+    private activeRoute: ActivatedRoute,
+    private router: Router
   ) { }
 
   public ngOnInit() {
     this.id = +this.activeRoute.snapshot.params['id'];
     this.createForm();
-    if(this.id) {
+    if (this.id) {
       this.editItem(this.id);
     }
   }
@@ -111,18 +112,34 @@ export class FormSimpleResponseComponent {
   public onSubmit() {
     console.log('simpleResponseForm', this.simpleResponseForm.value);
     const data: SimpleResponse = this.simpleResponseForm.value;
-    this.simpleResponseService.createForm(data).subscribe({
+    if (this.id) {
+      this.simpleResponseService.updateItem(data, this.id).subscribe({
         next: (response) => {
-            console.log('Formulário enviado com sucesso', response);
+          console.log('Formulário editado com sucesso', response);
         },
         error: (error) => {
-            console.error('Erro ao enviar formulário', error);
+          console.error('Erro ao enviar formulário', error);
         },
         complete: () => {
-            console.log('Envio Completo!');
+          console.log('Edição Completo!');
+          this.back();
         }
-    });
-    
+      })
+    } else {
+      this.simpleResponseService.createForm(data).subscribe({
+        next: (response) => {
+          console.log('Formulário enviado com sucesso', response);
+        },
+        error: (error) => {
+          console.error('Erro ao enviar formulário', error);
+        },
+        complete: () => {
+          console.log('Envio Completo!');
+          this.back();
+        }
+      });
+    }
+
   }
 
   public editItem(id: number) {
@@ -138,6 +155,10 @@ export class FormSimpleResponseComponent {
         console.log('Requisição completada.');
       }
     })
+  }
+
+  public back() {
+    this.router.navigate(['/simple/list']);
   }
 
 }

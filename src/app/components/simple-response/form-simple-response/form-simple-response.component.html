@@ -1,6 +1,6 @@
 <app-layout>
 
-    <form [formGroup]="simpleResponseForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="simpleResponseForm">
         <div *ngFor="let field of fields" class="align-fields">
             <label [ngClass]="{'separator': field.type === 'separator'}">{{field.label}}</label>
 
@@ -19,6 +19,8 @@
             <input *ngIf="field.type === 'checkbox'" [formControlName]="field.name" type="checkbox">
         </div>
 
-        <button type="submit">Submit</button>
+        <button class="btn btn-sm btn-success" (click)="onSubmit()">Submit</button>
+
+        <button class="btn btn-sm btn-danger" (click)="back()">Cancel</button>
     </form>
 </app-layout>
