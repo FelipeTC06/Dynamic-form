@@ -17,4 +17,8 @@ export class SimpleResponseService {
     return this.http.post(this.url, data);
   }
 
+  public getAllItems() {
+    return this.http.get(this.url);
+  }
+
 }
