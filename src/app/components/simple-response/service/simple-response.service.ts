@@ -21,4 +21,8 @@ export class SimpleResponseService {
     return this.http.get(this.url);
   }
 
+  public getItemById(id: number) {
+    return this.http.get(`${this.url}/${id}`);
+  }
+
 }

@@ -7,6 +7,11 @@ export const routes: Routes = [
             import('./components/simple-response/form-simple-response/form-simple-response.component').then(c => c.FormSimpleResponseComponent),
     },
     {
+        path: 'simple/form/:id',
+        loadComponent: () =>
+            import('./components/simple-response/form-simple-response/form-simple-response.component').then(c => c.FormSimpleResponseComponent),
+    },
+    {
         path: 'simple/list',
         loadComponent: () =>
             import('./components/simple-response/list-simple-response/list-simple-response.component').then(c => c.ListSimpleResponseComponent),

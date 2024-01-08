@@ -1,13 +1,14 @@
-import { SimpleResponse } from './../models/simple-response';
+import { routes } from './../../../app.routes';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { SimpleResponseService } from '../service/simple-response.service';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-list-simple-response',
   standalone: true,
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule, HttpClientModule, RouterModule],
   templateUrl: './list-simple-response.component.html',
   styleUrl: './list-simple-response.component.scss'
 })
@@ -16,7 +17,8 @@ export class ListSimpleResponseComponent {
   items!: any;
 
   constructor(
-    private simpleResponseService: SimpleResponseService
+    private simpleResponseService: SimpleResponseService,
+    private router: Router
   ) { }
 
   public ngOnInit() {
@@ -40,7 +42,7 @@ export class ListSimpleResponseComponent {
   }
 
   public editItem(id: number) {
-    
+    this.router.navigate(['/simple/form', id]);
   }
 
   public deleteItem(id: number) {

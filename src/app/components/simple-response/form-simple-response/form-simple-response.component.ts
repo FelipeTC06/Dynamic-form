@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { SimpleResponse } from '../models/simple-response';
 import { SimpleResponseService } from '../service/simple-response.service';
 
@@ -15,6 +16,8 @@ import { SimpleResponseService } from '../service/simple-response.service';
 export class FormSimpleResponseComponent {
 
   public simpleResponseForm!: FormGroup;
+
+  public  id!: number;
 
   public fields: any[] = [
     {
@@ -83,11 +86,16 @@ export class FormSimpleResponseComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private simpleResponseService: SimpleResponseService
+    private simpleResponseService: SimpleResponseService,
+    private activeRoute: ActivatedRoute
   ) { }
 
   public ngOnInit() {
-    this.createForm()
+    this.id = +this.activeRoute.snapshot.params['id'];
+    this.createForm();
+    if(this.id) {
+      this.editItem(this.id);
+    }
   }
 
   public createForm() {
@@ -114,6 +122,21 @@ export class FormSimpleResponseComponent {
         }
     });
     
+  }
+
+  public editItem(id: number) {
+    this.simpleResponseService.getItemById(id).subscribe({
+      next: (data) => {
+        console.log('Dados recebidos:', data);
+        this.simpleResponseForm.patchValue(data);
+      },
+      error: (error) => {
+        console.error('Erro ao receber dados:', error);
+      },
+      complete: () => {
+        console.log('Requisição completada.');
+      }
+    })
   }
 
 }
