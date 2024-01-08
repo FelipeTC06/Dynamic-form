@@ -46,7 +46,18 @@ export class ListSimpleResponseComponent {
   }
 
   public deleteItem(id: number) {
-
+    this.simpleResponseService.deleteItem(id).subscribe({
+      next: (data) => {
+        console.log('Dados recebidos:', data);
+      },
+      error: (error) => {
+        console.error('Erro ao receber dados:', error);
+      },
+      complete: () => {
+        console.log('Requisição completada.');
+        this.getItems();
+      }
+    })
   }
 
 }

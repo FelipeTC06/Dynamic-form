@@ -29,4 +29,8 @@ export class SimpleResponseService {
     return this.http.put(`${this.url}/${id}`, data);
   }
 
+  public deleteItem(id: number) {
+    return this.http.delete(`${this.url}/${id}`);
+  }
+
 }
