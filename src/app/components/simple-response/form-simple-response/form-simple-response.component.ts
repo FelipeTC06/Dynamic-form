@@ -1,11 +1,14 @@
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { SimpleResponse } from '../models/simple-response';
+import { SimpleResponseService } from '../service/simple-response.service';
 
 @Component({
   selector: 'app-form-simple-response',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule ],
   templateUrl: './form-simple-response.component.html',
   styleUrl: './form-simple-response.component.scss'
 })
@@ -78,7 +81,10 @@ export class FormSimpleResponseComponent {
     },
   ]
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private simpleResponseService: SimpleResponseService
+  ) { }
 
   public ngOnInit() {
     this.createForm()
@@ -88,13 +94,26 @@ export class FormSimpleResponseComponent {
     this.simpleResponseForm = this.formBuilder.group({});
     this.fields.forEach(field => {
       if (field.type !== 'separator') {
-        this.simpleResponseForm.addControl(field.name, new FormControl(''));
+        this.simpleResponseForm.addControl(field.name, new FormControl(null));
       }
     });
   }
 
   public onSubmit() {
     console.log('simpleResponseForm', this.simpleResponseForm.value);
+    const data: SimpleResponse = this.simpleResponseForm.value;
+    this.simpleResponseService.createForm(data).subscribe({
+        next: (response) => {
+            console.log('Formulário enviado com sucesso', response);
+        },
+        error: (error) => {
+            console.error('Erro ao enviar formulário', error);
+        },
+        complete: () => {
+            console.log('Envio Completo!');
+        }
+    });
+    
   }
 
 }
