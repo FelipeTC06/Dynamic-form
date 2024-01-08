@@ -1,16 +1,16 @@
-import { routes } from './../../../app.routes';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { SimpleResponseService } from '../service/simple-response.service';
 import { Router, RouterModule } from '@angular/router';
+import { LayoutComponent } from "../../layout/layout.component";
 
 @Component({
-  selector: 'app-list-simple-response',
-  standalone: true,
-  imports: [CommonModule, HttpClientModule, RouterModule],
-  templateUrl: './list-simple-response.component.html',
-  styleUrl: './list-simple-response.component.scss'
+    selector: 'app-list-simple-response',
+    standalone: true,
+    templateUrl: './list-simple-response.component.html',
+    styleUrl: './list-simple-response.component.scss',
+    imports: [CommonModule, HttpClientModule, RouterModule, LayoutComponent]
 })
 export class ListSimpleResponseComponent {
 

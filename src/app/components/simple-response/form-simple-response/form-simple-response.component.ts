@@ -5,13 +5,14 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angul
 import { ActivatedRoute } from '@angular/router';
 import { SimpleResponse } from '../models/simple-response';
 import { SimpleResponseService } from '../service/simple-response.service';
+import { LayoutComponent } from "../../layout/layout.component";
 
 @Component({
-  selector: 'app-form-simple-response',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HttpClientModule ],
-  templateUrl: './form-simple-response.component.html',
-  styleUrl: './form-simple-response.component.scss'
+    selector: 'app-form-simple-response',
+    standalone: true,
+    templateUrl: './form-simple-response.component.html',
+    styleUrl: './form-simple-response.component.scss',
+    imports: [CommonModule, ReactiveFormsModule, HttpClientModule, LayoutComponent]
 })
 export class FormSimpleResponseComponent {
 

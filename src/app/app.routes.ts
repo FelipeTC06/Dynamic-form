@@ -2,6 +2,11 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
     {
+        path: '',
+        loadComponent: () =>
+            import('./components/layout/layout.component').then(c => c.LayoutComponent),
+    },
+    {
         path: 'simple/form',
         loadComponent: () =>
             import('./components/simple-response/form-simple-response/form-simple-response.component').then(c => c.FormSimpleResponseComponent),

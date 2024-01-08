@@ -1,38 +1,40 @@
-<div>
-    <h3>Dados do Usuário</h3>
-    <table>
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Sobrenome</th>
-                <th>Gênero</th>
-                <th>Gosta de Esportes</th>
-                <th>Esporte Favorito</th>
-                <th>Empregado(a)</th>
-                <th>Nome da Empresa</th>
-                <th>Posição Feliz</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            @for (item of items; track item.name) {
-            <tr>
-                <td>{{ item.firstName }}</td>
-                <td>{{ item.lastName }}</td>
-                <td>{{ item.gender }}</td>
-                <td>{{ item.likeSports ? 'Sim' : 'Não' }}</td>
-                <td>{{ item.favSport }}</td>
-                <td>{{ item.isEmployed ? 'Sim' : 'Não' }}</td>
-                <td>{{ item.companyName }}</td>
-                <td>{{ item.happyPosition }}</td>
-                <td class="edit-td">
-                    <i class="icon-table bi bi-pen" (click)="editItem(item.id)"></i>
-                    <i class="icon-table bi bi-trash-fill" (click)="deleteItem(item.id)"></i>
-                </td>
-            </tr>
-            } @empty {
-            <span> There are no items. </span>
-            }
-        </tbody>
-    </table>
-</div>
+<app-layout>
+    <div>
+        <h3>Dados do Usuário</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Sobrenome</th>
+                    <th>Gênero</th>
+                    <th>Gosta de Esportes</th>
+                    <th>Esporte Favorito</th>
+                    <th>Empregado(a)</th>
+                    <th>Nome da Empresa</th>
+                    <th>Posição Feliz</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (item of items; track item.name) {
+                <tr>
+                    <td>{{ item.firstName }}</td>
+                    <td>{{ item.lastName }}</td>
+                    <td>{{ item.gender }}</td>
+                    <td>{{ item.likeSports ? 'Sim' : 'Não' }}</td>
+                    <td>{{ item.favSport }}</td>
+                    <td>{{ item.isEmployed ? 'Sim' : 'Não' }}</td>
+                    <td>{{ item.companyName }}</td>
+                    <td>{{ item.happyPosition }}</td>
+                    <td class="edit-td">
+                        <i class="icon-table bi bi-pen" (click)="editItem(item.id)"></i>
+                        <i class="icon-table bi bi-trash-fill" (click)="deleteItem(item.id)"></i>
+                    </td>
+                </tr>
+                } @empty {
+                <span> There are no items. </span>
+                }
+            </tbody>
+        </table>
+    </div>
+</app-layout>
