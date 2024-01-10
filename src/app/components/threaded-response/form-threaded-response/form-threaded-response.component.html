@@ -1,3 +1,32 @@
 <app-layout>
-    <p>form-threaded-response works!</p>
+    <form [formGroup]="simplesThreadedResponse">
+        <ng-container *ngFor="let field of fields">
+            <div *ngIf="field.type === 'separator'" [formGroupName]="field.name">
+                <label>{{ field.label }}</label>
+                <div *ngFor="let subfield of field.fields">
+                    <label>{{ subfield.label }}</label>
+
+                    <input *ngIf="subfield.type === 'text'" [formControlName]="subfield.name" type="text">
+
+                    <select *ngIf="subfield.type === 'select'" [formControlName]="subfield.name">
+                        <option *ngFor="let option of subfield.options" [value]="option.value">{{option.label}}</option>
+                    </select>
+
+                    <div *ngIf="subfield.type === 'radio'" class="align-fields">
+                        <div *ngFor="let option of subfield.options" class="align-radio">
+                            <input [formControlName]="subfield.name" type="radio"
+                                [value]="option.value">{{option.label}}
+                        </div>
+                    </div>
+
+                    <input *ngIf="subfield.type === 'checkbox'" [formControlName]="subfield.name" type="checkbox">
+
+                </div>
+            </div>
+        </ng-container>
+        <button class="btn btn-sm btn-success" (click)="onSubmit()">Submit</button>
+
+        <button class="btn btn-sm btn-danger" (click)="back()">Cancel</button>
+    </form>
+
 </app-layout>
