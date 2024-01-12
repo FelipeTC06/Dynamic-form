@@ -1,3 +1,44 @@
 <app-layout>
-    <p>list-threaded-response works!</p>
+    <div>
+        <h3>Dados do Usuário</h3>
+        <button class="btn btn-primary" [routerLink]="['../form']">New</button>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Sobrenome</th>
+                    <th>Gênero</th>
+                    <th>Gosta de Esportes</th>
+                    <th>Esporte Favorito</th>
+                    <th>Empregado(a)</th>
+                    <th>Nome da Empresa</th>
+                    <th>Posição Feliz</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (item of items; track item.personalInfo.firstName) {
+                    <tr>
+                        <td>{{ item.personalInfo.firstName }}</td>
+                        <td>{{ item.personalInfo.lastName }}</td>
+                        <td>{{ item.personalInfo.gender }}</td>
+                        <td>{{ item.personalInfo.likeSports ? 'Sim' : 'Não' }}</td>
+                        <td>{{ item.personalInfo.favSport }}</td>
+                        <td>{{ item.workInfo.isEmployed ? 'Sim' : 'Não' }}</td>
+                        <td>{{ item.workInfo.companyName }}</td>
+                        <td>{{ item.workInfo.happyPosition }}</td>
+                        <td class="edit-td">
+                            <i class="icon-table bi bi-pen" (click)="editItem(item.id)"></i>
+                            <i class="icon-table bi bi-trash-fill" (click)="deleteItem(item.id)"></i>
+                        </td>
+                    </tr>
+                } @empty {
+                    <tr>
+                        <td> There are no items. </td>
+                    </tr>
+                }
+            </tbody>
+            
+        </table>
+    </div>
 </app-layout>

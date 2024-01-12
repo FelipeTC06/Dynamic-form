@@ -4,6 +4,8 @@ import { Component } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LayoutComponent } from "../../layout/layout.component";
+import { ThreadedResponse } from '../model/threaded-response';
+import { ThreadedResponseService } from '../service/threaded-response.service';
 
 @Component({
     selector: 'app-form-threaded-response',
@@ -90,6 +92,7 @@ export class FormThreadedResponseComponent {
 
     constructor(
         private formBuilder: FormBuilder,
+        private threadedResponseService: ThreadedResponseService,
         // private activeRoute: ActivatedRoute,
         private router: Router
     ) { }
@@ -111,7 +114,19 @@ export class FormThreadedResponseComponent {
     }
 
     public onSubmit() {
-        console.log('simplesThreadedResponse', this.simplesThreadedResponse.value)
+        const data: ThreadedResponse = this.simplesThreadedResponse.value;
+        this.threadedResponseService.createThreadedItem(data).subscribe({
+            next: (response) => {
+                console.log('Formulário enviado com sucesso', response);
+            },
+            error: (error) => {
+                console.error('Erro ao enviar formulário', error);
+            },
+            complete: () => {
+                console.log('Envio Completo!');
+                this.back();
+            }
+        })
     }
 
     public back() {
