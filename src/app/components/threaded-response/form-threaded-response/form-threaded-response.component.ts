@@ -2,8 +2,9 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormBuilder, FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LayoutComponent } from "../../layout/layout.component";
+import { FormField } from '../model/form-fields';
 import { ThreadedResponse } from '../model/threaded-response';
 import { ThreadedResponseService } from '../service/threaded-response.service';
 
@@ -17,8 +18,8 @@ import { ThreadedResponseService } from '../service/threaded-response.service';
 export class FormThreadedResponseComponent {
 
     public simplesThreadedResponse!: FormGroup;
-
-    public fields: any[] = [
+    public id!: number;
+    public fields: FormField[] = [
         {
             type: 'separator',
             label: 'Personal Information',
@@ -93,12 +94,16 @@ export class FormThreadedResponseComponent {
     constructor(
         private formBuilder: FormBuilder,
         private threadedResponseService: ThreadedResponseService,
-        // private activeRoute: ActivatedRoute,
+        private activeRoute: ActivatedRoute,
         private router: Router
     ) { }
 
     public ngOnInit() {
+        this.id = +this.activeRoute.snapshot.params['id'];
         this.simplesThreadedResponse = this.createGroup(this.fields);
+        if (this.id) {
+            this.editItem(this.id);
+        }
     }
 
     public createGroup(fields: any[]): FormGroup {
@@ -115,16 +120,46 @@ export class FormThreadedResponseComponent {
 
     public onSubmit() {
         const data: ThreadedResponse = this.simplesThreadedResponse.value;
-        this.threadedResponseService.createThreadedItem(data).subscribe({
-            next: (response) => {
-                console.log('Formulário enviado com sucesso', response);
+        if (this.id) {
+            this.threadedResponseService.updateItem(data, this.id).subscribe({
+                next: (response) => {
+                    console.log('Formulário enviado com sucesso');
+                },
+                error: (error) => {
+                    console.error('Erro ao enviar formulário', error);
+                },
+                complete: () => {
+                    console.log('Envio Completo!');
+                    this.back();
+                }
+            })
+        } else {
+            this.threadedResponseService.createThreadedItem(data).subscribe({
+                next: (response) => {
+                    console.log('Formulário enviado com sucesso');
+                },
+                error: (error) => {
+                    console.error('Erro ao enviar formulário', error);
+                },
+                complete: () => {
+                    console.log('Envio Completo!');
+                    this.back();
+                }
+            })
+        }
+    }
+
+    public editItem(id: number) {
+        console.log('this.simplesThreadedResponse.value', this.simplesThreadedResponse.value)
+        this.threadedResponseService.getThreadedItemById(id).subscribe({
+            next: (data: ThreadedResponse[]) => {
+                this.simplesThreadedResponse.patchValue(data);
             },
             error: (error) => {
-                console.error('Erro ao enviar formulário', error);
+                console.error('Erro ao receber dados:', error);
             },
             complete: () => {
-                console.log('Envio Completo!');
-                this.back();
+                console.log('Requisição completada.');
             }
         })
     }

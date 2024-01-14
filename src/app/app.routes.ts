@@ -27,6 +27,11 @@ export const routes: Routes = [
             import('./components/threaded-response/form-threaded-response/form-threaded-response.component').then(c => c.FormThreadedResponseComponent),
     },
     {
+        path: 'threaded/form/:id',
+        loadComponent: () =>
+            import('./components/threaded-response/form-threaded-response/form-threaded-response.component').then(c => c.FormThreadedResponseComponent),
+    },
+    {
         path: 'threaded/list',
         loadComponent: () =>
             import('./components/threaded-response/list-threaded-response/list-threaded-response.component').then(c => c.ListThreadedResponseComponent),

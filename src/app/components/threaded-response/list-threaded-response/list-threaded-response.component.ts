@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { response } from 'express';
 import { LayoutComponent } from "../../layout/layout.component";
+import { ThreadedResponse } from '../model/threaded-response';
 import { ThreadedResponseService } from '../service/threaded-response.service';
 
 @Component({
@@ -15,7 +15,7 @@ import { ThreadedResponseService } from '../service/threaded-response.service';
 })
 export class ListThreadedResponseComponent {
 
-    public items: any
+    public items: ThreadedResponse[] = [];
 
     constructor(
         private threadedResponseService: ThreadedResponseService,
@@ -28,8 +28,7 @@ export class ListThreadedResponseComponent {
 
     public getItems() {
         this.threadedResponseService.getAllThreadedItem().subscribe({
-            next: (data) => {
-                console.log('Dados recebidos:', data);
+            next: (data: ThreadedResponse[]) => {
                 this.items = data;
             },
             error: (error) => {
@@ -41,11 +40,23 @@ export class ListThreadedResponseComponent {
         })
     }
 
-    public editItem(id: number) {
 
+    public editItem(id: number) {
+        this.router.navigate(['threaded/form', id]);
     }
 
     public deleteItem(id: number) {
-
+        this.threadedResponseService.deleteItem(id).subscribe({
+            next: (data) => {
+                console.log('Dados recebidos:');
+            },
+            error: (error) => {
+                console.error('Erro ao receber dados:', error);
+            },
+            complete: () => {
+                console.log('Requisição completada.');
+                this.getItems();
+            }
+        })
     }
 }

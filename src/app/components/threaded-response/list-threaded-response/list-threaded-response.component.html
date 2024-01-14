@@ -17,16 +17,16 @@
                 </tr>
             </thead>
             <tbody>
-                @for (item of items; track item.personalInfo.firstName) {
+                @for (item of items; track item.personalInfo.per_firstName) {
                     <tr>
-                        <td>{{ item.personalInfo.firstName }}</td>
-                        <td>{{ item.personalInfo.lastName }}</td>
-                        <td>{{ item.personalInfo.gender }}</td>
-                        <td>{{ item.personalInfo.likeSports ? 'Sim' : 'Não' }}</td>
-                        <td>{{ item.personalInfo.favSport }}</td>
-                        <td>{{ item.workInfo.isEmployed ? 'Sim' : 'Não' }}</td>
-                        <td>{{ item.workInfo.companyName }}</td>
-                        <td>{{ item.workInfo.happyPosition }}</td>
+                        <td>{{ item.personalInfo.per_firstName }}</td>
+                        <td>{{ item.personalInfo.per_lastName }}</td>
+                        <td>{{ item.personalInfo.per_gender }}</td>
+                        <td>{{ item.personalInfo.per_likeSports ? 'Sim' : 'Não' }}</td>
+                        <td>{{ item.personalInfo.per_favSport }}</td>
+                        <td>{{ item.workInfo.wor_isEmployed ? 'Sim' : 'Não' }}</td>
+                        <td>{{ item.workInfo.wor_companyName }}</td>
+                        <td>{{ item.workInfo.wor_happyPosition }}</td>
                         <td class="edit-td">
                             <i class="icon-table bi bi-pen" (click)="editItem(item.id)"></i>
                             <i class="icon-table bi bi-trash-fill" (click)="deleteItem(item.id)"></i>

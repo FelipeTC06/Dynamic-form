@@ -1,5 +1,5 @@
 export type WorkInfoResponse = {
-    isEmployed: boolean,
-    companyName: string,
-    happyPosition: string
+    wor_isEmployed: boolean,
+    wor_companyName: string,
+    wor_happyPosition: string
 }

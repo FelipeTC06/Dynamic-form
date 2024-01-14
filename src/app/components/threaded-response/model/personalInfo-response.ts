@@ -1,7 +1,7 @@
 export type PersonalInfoResponse = {
-    firstName: string,
-    lastName: string,
-    gender: string,
-    likeSports: boolean,
-    favSport: string,
+    per_firstName: string,
+    per_lastName: string,
+    per_gender: string,
+    per_likeSports: boolean,
+    per_favSport: string,
 }
